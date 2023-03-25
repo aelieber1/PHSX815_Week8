@@ -27,7 +27,7 @@ mu_best_values = []
 
 # Define parameters
 Nmeas = 1
-Nexp = 10
+Nexp = 100000
 mu_experiment = 2
 mu_true = 0
 mu_best = 0
@@ -42,7 +42,8 @@ for i in range(-100,101):
         
         # loop over measurements
         for m in range(Nmeas):
-            x = int(np.random.normal(loc=mu_true,scale=sigma))
+            #x = np.random.poisson(mu_true)
+            x = np.random.normal(loc=mu_true, scale=sigma)
             
             # add up all measurements
             mu_best += x
@@ -55,13 +56,18 @@ for i in range(-100,101):
 x = mu_true_values
 y = mu_best_values
 
-print("Mu_true: ", mu_true_values)
-print("Mu_best: ", mu_best_values)
+#print("Mu_true: ", mu_true_values)
+#print("Mu_best: ", mu_best_values)
 
 
 # Index that matches the mu_experiment
-index = mu_best_values.index(mu_experiment)
-print("index: ", index)
+#index = mu_best_values.index(mu_experiment)
+#print("index: ", index)
 
-ax = sns.regplot(x, y, ci=80)
+# Plot a 2 Dimensional Histogram of this data
+#ax = sns.regplot(x, y, ci=80)
+plt.hist2d(x, y, bins=100)
+plt.xlabel("#mu true")
+plt.ylabel("#mu measured")
+plt.title("Neyman Construction - Gaussian Function")
 plt.show()
